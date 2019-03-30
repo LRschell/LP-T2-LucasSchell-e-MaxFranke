@@ -3,10 +3,36 @@ grammar org.xtext.example.mydsl.MyDsl with org.eclipse.xtext.common.Terminals
 generate myDsl "http://www.xtext.org/example/mydsl/MyDsl"
 
 Model:
-	greetings+=Greeting*;
+	Model+=List*;
 	
-Greeting:
-	'('Symbols name=INT ')' |Symbols name=INT ;
+List:
+	 Symbol | Expressions | Others 
+;
+	
+Expressions:
+	'('Symbol Numbers* ')'  | '(' Numbers ')' | Numbers 
+;	
 
-Symbols:
-	'+' | '-';
+Symbol:
+	'+' | '-' |'/' | '*'
+;
+
+Numbers:
+	INT | '+'INT  | '-'INT | DECIMAL
+;
+Others:
+	 '(''+'')' | '(''*'')'|'()'| COMMENT
+;
+
+terminal DECIMAL:
+	(('.' INT) | (INT '.') | (INT '.' INT)) (('e'|'E') ('+'|'-')? INT)? 
+	//https://www.eclipse.org/Xtext/documentation/301_grammarlanguage.html#common-terminals
+;
+@Override 
+terminal ID: 
+    '^'?('a'..'z'|'A'..'Z'|'_')('a'..'z'|'A'..'Z'|'_'|'0'..'9')*
+;
+ 
+terminal COMMENT: 
+    ';;' !('\n'|'\r')* ('\r'? '\n')?
+;
