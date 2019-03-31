@@ -21,7 +21,7 @@ class MyDslParsingTest {
 	@Test
 	def void blank() {
 		val result = parseHelper.parse('''
-			()
+			(+ 5 5)
 		''')
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
@@ -55,5 +55,32 @@ class MyDslParsingTest {
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 	}
 	
+	@Test
+	def void expression() {
+		val result = parseHelper.parse('''
+			+ 5 +5 +5 +5 +55 + 5+ 
+		''')
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+	}
+	@Test
+	def void list() {
+		val result = parseHelper.parse('''
+			(list 1 2 3 5)
+		''')
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+	}
+	@Test
+	def void trigF() {
+		val result = parseHelper.parse('''
+			(abs 1 2 3 4 5)
+		''')
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+	}
 
 }
