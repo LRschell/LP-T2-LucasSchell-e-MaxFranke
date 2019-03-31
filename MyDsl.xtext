@@ -14,7 +14,7 @@ Expressions:
 ;	
 
 Symbol:
-	'+' | '-' |'/' | '*'
+	'+' | '-' |'/' | '*' | TrigFunctions
 ;
 
 Numbers:
@@ -35,4 +35,8 @@ terminal ID:
  
 terminal COMMENT: 
     ';;' !('\n'|'\r')* ('\r'? '\n')?
+;
+
+TrigFunctions:
+	'abs'|'cos'| 'list'
 ;
