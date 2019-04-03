@@ -21,7 +21,7 @@ Numbers:
 	INT | '+'INT  | '-'INT | DECIMAL
 ;
 Others:
-	 '(''+'')' | '(''*'')'|'()'| COMMENT |'('Length')'
+	 '(''+'')' | '(''*'')'|'()'| COMMENT |'('Length')'| Define
 ;
 
 terminal DECIMAL:
@@ -46,4 +46,7 @@ Length:
 ;
 Lista:
 	'(''list' Numbers*')'
+;
+Define:
+	'(''define' '('ID*')' Expressions ')'
 ;
