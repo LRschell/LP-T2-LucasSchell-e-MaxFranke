@@ -76,7 +76,43 @@ class MyDslParsingTest {
 	@Test
 	def void trigF() {
 		val result = parseHelper.parse('''
-			(abs 1 2 3 4 5)
+			(abs 2)
+		''')
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+	}
+	@Test
+	def void parentesis() {
+		val result = parseHelper.parse('''
+			(+ (+ 1 2 3) -2)
+		''')
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+	}
+	@Test
+	def void parentesis2() {
+		val result = parseHelper.parse('''
+			(/(/ (- 1 2 3) (+ 2 2 5)))
+		''')
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+	}
+	@Test
+	def void lista() {
+		val result = parseHelper.parse('''
+			(list 1 2 3)
+		''')
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+	}
+	@Test
+	def void listaelength() {
+		val result = parseHelper.parse('''
+			(length(list 1 2 3))
 		''')
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
