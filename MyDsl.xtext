@@ -10,11 +10,11 @@ List:
 ;
 	
 Expressions:
-	'('Symbol Numbers* ')'  | '(' Numbers ')' | Numbers 
+	'('Symbol (Numbers|Expressions)* ')'  | Numbers |'(' TrigFunctions Numbers?')' 
 ;	
 
 Symbol:
-	'+' | '-' |'/' | '*' | TrigFunctions
+	'+' | '-' |'/' | '*' | 'list'
 ;
 
 Numbers:
@@ -38,5 +38,5 @@ terminal COMMENT:
 ;
 
 TrigFunctions:
-	'abs'|'cos'| 'list'
+	'abs'|'cos'| 'list'| 'square'
 ;
