@@ -10,7 +10,7 @@ List:
 ;
 	
 Expressions:
-	'('Symbol (Numbers|Expressions)* ')'  | Numbers |'(' TrigFunctions Numbers?')' 
+	'('Symbol (Numbers|Expressions)* ')'  | Numbers |'(' TrigFunctions Numbers')' 
 ;	
 
 Symbol:
@@ -21,7 +21,7 @@ Numbers:
 	INT | '+'INT  | '-'INT | DECIMAL
 ;
 Others:
-	 '(''+'')' | '(''*'')'|'()'| COMMENT
+	 '(''+'')' | '(''*'')'|'()'| COMMENT |'('Length')'
 ;
 
 terminal DECIMAL:
@@ -38,5 +38,12 @@ terminal COMMENT:
 ;
 
 TrigFunctions:
-	'abs'|'cos'| 'list'| 'square'
+	'abs'|'cos'| 'square'
+
+;
+Length:
+	'length' Lista
+;
+Lista:
+	'(''list' Numbers*')'
 ;
