@@ -21,7 +21,7 @@ Numbers:
 	INT | '+'INT  | '-'INT | DECIMAL
 ;
 Others:
-	 '(''+'')' | '(''*'')'|'()'| COMMENT |'('Length')'| Define
+	 '(''+'')' | '(''*'')'|'()'| COMMENT |'('Length')'| Define 
 ;
 
 terminal DECIMAL:
@@ -48,5 +48,9 @@ Lista:
 	'(''list' Numbers*')'
 ;
 Define:
-	'(''define' '('ID*')' Expressions ')'
+	'(' 'define' '('Numbers Symbol ID')' '('ExpressionsA')'')'
+;
+
+ExpressionsA:
+	Symbol ID Numbers
 ;
