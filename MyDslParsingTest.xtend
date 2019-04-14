@@ -19,29 +19,32 @@ class MyDslParsingTest {
 	ParseHelper<Model> parseHelper
 	
 	@Test
-	def void blank() {
+	def void sum() {
 		val result = parseHelper.parse('''
-			(+ 5 5)
+			(+)
 		''')
+		//source: http://www.shido.info/lisp/scheme2_e.html
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 	}
 	@Test
-	def void negativeNumber() {
+	def void sum2() {
 		val result = parseHelper.parse('''
-			-5
+			(+ 1 2 3)
 		''')
 		Assertions.assertNotNull(result)
+		//source: http://www.shido.info/lisp/scheme2_e.html
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 	}
 	@Test
-	def void Number() {
+	def void sum3() {
 		val result = parseHelper.parse('''
-			5
+			(* (+ 1 39) (- 53 45))    
 		''')
 		Assertions.assertNotNull(result)
+		//source: http://www.shido.info/lisp/scheme2_e.html
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 	}
@@ -51,16 +54,18 @@ class MyDslParsingTest {
 			;;KKKKKKHGFGHFGFHR43543FS432432dsds gfdgfd
 		''')
 		Assertions.assertNotNull(result)
+		//source http://www.shido.info/lisp/scheme5_e.html
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 	}
 	
 	@Test
-	def void expression() {
+	def void sum4() {
 		val result = parseHelper.parse('''
-			+ 5 +5 +5 +5 +55 + 5+ 
+			(+ (/ 1020 39) (* 45 2))  
 		''')
 		Assertions.assertNotNull(result)
+		//source: http://www.shido.info/lisp/scheme2_e.html
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 	}
@@ -70,6 +75,7 @@ class MyDslParsingTest {
 			(list 1 2 3 5)
 		''')
 		Assertions.assertNotNull(result)
+		//source //source: http://www.shido.info/lisp/scheme3_e.html
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 	}
@@ -79,14 +85,16 @@ class MyDslParsingTest {
 			(abs 2)
 		''')
 		Assertions.assertNotNull(result)
+		//source: http://www.shido.info/lisp/idx_scm_e.html
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 	}
 	@Test
 	def void parentesis() {
 		val result = parseHelper.parse('''
-			(+ (+ 1 2 3) -2)
+			(list)
 		''')
+		//source: http://www.shido.info/lisp/scheme3_e.html
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
@@ -94,9 +102,10 @@ class MyDslParsingTest {
 	@Test
 	def void parentesis2() {
 		val result = parseHelper.parse('''
-			(/(/ (- 1 2 3) (+ 2 2 5)))
+			(list 1 2)
 		''')
 		Assertions.assertNotNull(result)
+		//source: http://www.shido.info/lisp/scheme3_e.html
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 	}
@@ -106,6 +115,7 @@ class MyDslParsingTest {
 			(list 1 2 3)
 		''')
 		Assertions.assertNotNull(result)
+		//source: http://www.shido.info/lisp/scheme3_e.html
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 	}
@@ -115,8 +125,63 @@ class MyDslParsingTest {
 			(length(list 1 2 3))
 		''')
 		Assertions.assertNotNull(result)
+		//source: http://www.shido.info/lisp/scheme3_e.html
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
 	}
+	
+	@Test
+	def void test1() {
+		val result = parseHelper.parse('''
+			(define (1+ x)
+			  (+ x 1))
+		''')
+		Assertions.assertNotNull(result)
+		//source http://www.shido.info/lisp/scheme4_e.html
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+	}
+	
+	@Test
+	def void test2() {
+		val result = parseHelper.parse('''
+			(define (1- x) (- x 1))
+		''')
+		Assertions.assertNotNull(result)
+		//source http://www.shido.info/lisp/scheme4_e.html
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+	}
+	@Test
+	def void test3() {
+		val result = parseHelper.parse('''
+			(/(/ (- 1 2 3) (+ 2 2 5)))
+		''')
+		Assertions.assertNotNull(result)
+		//source:https://repl.it/@bburnham/Hour-of-Code-Scheme
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+	}
+	@Test
+	def void test4() {
+		val result = parseHelper.parse('''
+			(list 1 2 3)
+		''')
+		Assertions.assertNotNull(result)
+		//source:https://repl.it/@bburnham/Hour-of-Code-Scheme
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+	}
+	@Test
+	def void test5() {
+		val result = parseHelper.parse('''
+			(length(list 1 2 3))
+		''')
+		Assertions.assertNotNull(result)
+		//source:https://repl.it/@bburnham/Hour-of-Code-Scheme
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+	}
+	
 
 }
